@@ -1,0 +1,49 @@
+================================================================================
+          ESTÁNDAR DE FLUJO DE TRABAJO SEGURO EN GIT (GITFLOW)
+================================================================================
+ID: SEC-STD-605 | Versión: 1.0 | Clasificación: CONFIDENCIAL
+--------------------------------------------------------------------------------
+
+1. INTRODUCCIÓN
+--------------------------------------------------------------------------------
+El control de versiones es el corazón del desarrollo. Esta política define cómo 
+se debe utilizar Git para mantener la integridad del código y prevenir la 
+introducción accidental de vulnerabilidades.
+
+2. ESTRUCTURA DE RAMAS (BRANCHING STRATEGY)
+--------------------------------------------------------------------------------
+
+- MAIN (Producción): Rama altamente protegida. Solo acepta 'merges' desde la 
+  rama 'release'. Requiere firma digital de commits.
+- DEVELOP: Rama de integración para el ciclo de desarrollo actual.
+- FEATURE/*: Ramas temporales para nuevas funcionalidades.
+- HOTFIX/*: Ramas críticas para correcciones inmediatas de seguridad en producción.
+
+3. CONTROLES DE SEGURIDAD EN GIT
+--------------------------------------------------------------------------------
+
+A. PRE-COMMIT HOOKS:
+   Script local que impide realizar 'commits' si se detectan:
+   - Claves de API o contraseñas.
+   - Archivos .env no ignorados.
+   - Errores de linting básicos.
+
+B. PROTECCIÓN DE RAMAS (BRANCH PROTECTION):
+   - Prohibir 'Force Push' en las ramas main y develop.
+   - Requerir revisión de Pull Request antes de fusionar.
+   - Requerir que las comprobaciones de estado (CI) pasen con éxito.
+
+C. HISTORIAL LIMPIO:
+   Uso de `git rebase` o `squash merge` para mantener un historial de cambios 
+   legible y auditable.
+
+4. AUDITORÍA DE ACCESO
+--------------------------------------------------------------------------------
+- Los accesos al repositorio deben estar vinculados a identidades individuales 
+  (No cuentas compartidas).
+- Uso obligatorio de Autenticación de Dos Factores (2FA) para todos los 
+  colaboradores.
+
+--------------------------------------------------------------------------------
+FIN DEL DOCUMENTO | Elaborado por: Auditoría de Ciberseguridad
+================================================================================

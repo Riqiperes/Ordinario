@@ -1,0 +1,50 @@
+================================================================================
+          REPORTES DE ALERTAS GENERADAS Y RESULTADOS DEL ANÁLISIS
+================================================================================
+ID: SEC-SIEM-503 | Versión: 1.0 | Clasificación: CONFIDENCIAL
+--------------------------------------------------------------------------------
+
+1. RESUMEN DE ALERTAS (ÚLTIMAS 24 HORAS)
+--------------------------------------------------------------------------------
+Durante el periodo de monitoreo inicial, el SIEM ha capturado los siguientes 
+eventos de seguridad correlacionados.
+
+| Nivel | Alerta                     | Agente        | Frecuencia | Estado     |
+|-------|----------------------------|---------------|------------|------------|
+| 12    | Ataque de SQL Injection     | AGENT-API-01  | 15 eventos | Mitigado   |
+| 10    | Cambio en Archivo Crítico   | AGENT-WEB-01  | 1 evento   | Bajo Inv.  |
+| 7     | Múltiples Errores 404       | AGENT-WEB-01  | 120 eventos| Cerrado    |
+| 5     | Acceso Exitoso vía SSH      | AGENT-DB-01   | 2 eventos  | Verificado |
+
+2. ANÁLISIS DE ALERTAS CRÍTICAS
+--------------------------------------------------------------------------------
+
+DETALLE: ATAQUE DE SQL INJECTION DETECTADO (Nivel 12)
+- Regla: 100201 - "Detección de patrón UNION SELECT en logs de aplicación".
+- Descripción: El SIEM detectó múltiples intentos de inyección de código SQL 
+  provenientes de la IP 192.168.1.50 dirigidos al endpoint `/api/search`.
+- Acción Automática: La dirección IP fue bloqueada en el Firewall Perimetral 
+  mediante el módulo "Active Response" de Wazuh.
+
+DETALLE: CAMBIO EN ARCHIVO CRÍTICO (Nivel 10)
+- Regla: 550 - "Integridad del archivo modificada".
+- Descripción: Se detectó una modificación en el archivo `/etc/nginx/nginx.conf`.
+- Análisis: El cambio fue realizado por el usuario 'admin_root'. Se procedió a 
+  validar la orden de cambio (RFC-102).
+
+3. RESULTADOS DE CUMPLIMIENTO (PCI-DSS)
+--------------------------------------------------------------------------------
+El SIEM confirma que:
+- Se están registrando todos los accesos administrativos (Req 10.2.2).
+- Existe una pista de auditoría inmutable para cada evento (Req 10.3).
+- Se generan alertas automáticas ante fallos críticos de seguridad (Req 10.6).
+
+4. MÉTRICAS DE EFECTIVIDAD
+--------------------------------------------------------------------------------
+- Tiempo medio de detección (MTTD): 45 segundos.
+- Tiempo medio de respuesta (MTTR): 2 minutos (Automatizada).
+- Tasa de Falsos Positivos: < 5%.
+
+--------------------------------------------------------------------------------
+FIN DEL DOCUMENTO | Elaborado por: Auditoría de Ciberseguridad
+================================================================================

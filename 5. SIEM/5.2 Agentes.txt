@@ -1,0 +1,62 @@
+================================================================================
+          DESPLIEGUE Y CONFIGURACIÓN DE AGENTES SIEM
+================================================================================
+ID: SEC-SIEM-502 | Versión: 1.0 | Clasificación: CONFIDENCIAL
+--------------------------------------------------------------------------------
+
+1. OBJETIVO
+--------------------------------------------------------------------------------
+Definir los procedimientos de instalación y las directrices de configuración de 
+los agentes SIEM encargados de la recolección de telemetría en los nodos 
+productivos de Electronics-eCommerce.
+
+2. INVENTARIO DE DESPLIEGUE DE AGENTES
+--------------------------------------------------------------------------------
+| Host ID       | Función            | SO             | IP Interna    | Estado |
+|---------------|--------------------|----------------|---------------|--------|
+| AGENT-WEB-01  | Front-end/Proxy    | Linux (Debian) | 10.0.1.10     | ACTIVO |
+| AGENT-API-01  | Node.js Business   | Linux (Ubuntu) | 10.0.1.11     | ACTIVO |
+| AGENT-DB-01   | MySQL Database     | Linux (Ubuntu) | 10.0.2.20     | ACTIVO |
+
+3. CONFIGURACIÓN TÉCNICA DEL AGENTE (ossec.conf)
+--------------------------------------------------------------------------------
+Se han configurado los siguientes módulos en cada agente para maximizar la 
+visibilidad:
+
+A. MONITOREO DE ARCHIVOS DE LOG (Log Analysis):
+   <localfile>
+     <location>/server/logs/security.log</location>
+     <log_format>json</log_format>
+   </localfile>
+   <localfile>
+     <location>/var/log/mysql/error.log</location>
+     <log_format>syslog</log_format>
+   </localfile>
+
+B. MONITOREO DE INTEGRIDAD DE ARCHIVOS (FIM):
+   Se monitorean cambios no autorizados en:
+   - `/server/app.js`
+   - `/server/utills/db.js`
+   - `/etc/nginx/nginx.conf`
+
+C. DETECCIÓN DE ROOTKITS Y ANOMALÍAS:
+   Escaneo periódico de puertos abiertos y procesos ocultos.
+
+4. COMANDOS DE INSTALACIÓN (SIMULACIÓN REAL)
+--------------------------------------------------------------------------------
+Instalación del agente mediante repositorio oficial:
+$ WAZUH_MANAGER='10.0.0.5' apt-get install wazuh-agent
+
+Registro y arranque:
+$ /var/ossec/bin/agent-auth -m 10.0.0.5
+$ systemctl enable wazuh-agent && systemctl start wazuh-agent
+
+5. SEGURIDAD DE LA COMUNICACIÓN
+--------------------------------------------------------------------------------
+- Autenticación: Cada agente utiliza una llave única (key) generada por el 
+  manager.
+- Cifrado: Tráfico TLS 1.2/1.3 entre agentes y servidor central.
+
+--------------------------------------------------------------------------------
+FIN DEL DOCUMENTO | Elaborado por: Auditoría de Ciberseguridad
+================================================================================

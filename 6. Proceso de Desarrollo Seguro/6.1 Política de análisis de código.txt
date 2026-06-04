@@ -1,0 +1,48 @@
+================================================================================
+          POLÍTICA DE ANÁLISIS DE CÓDIGO (ESTÁTICO Y DINÁMICO)
+================================================================================
+ID: SEC-POL-601 | Versión: 1.0 | Clasificación: CONFIDENCIAL
+--------------------------------------------------------------------------------
+
+1. OBJETIVO
+--------------------------------------------------------------------------------
+Establecer los lineamientos para la inspección obligatoria del código fuente y 
+la aplicación en ejecución, con el fin de identificar y mitigar vulnerabilidades 
+de seguridad antes de que el software sea desplegado en el entorno de producción.
+
+2. ALCANCE
+--------------------------------------------------------------------------------
+Esta política aplica a todos los desarrolladores, arquitectos y personal de QA 
+involucrados en el ciclo de vida del proyecto Electronics-eCommerce.
+
+3. ANÁLISIS ESTÁTICO DE SEGURIDAD (SAST)
+--------------------------------------------------------------------------------
+- Frecuencia: Cada vez que se realice un "Pull Request" (PR) hacia las ramas 
+  principales (main/develop).
+- Herramientas Obligatorias: SonarQube, ESLint (con plugin de seguridad) y Snyk.
+- Requisitos de Aprobación: No se permiten despliegues con vulnerabilidades de 
+  severidad "Alta" o "Crítica" detectadas por las herramientas de SAST.
+
+4. ANÁLISIS DINÁMICO DE SEGURIDAD (DAST)
+--------------------------------------------------------------------------------
+- Frecuencia: Trimestral o tras cambios significativos en la lógica de negocio.
+- Herramientas Obligatorias: OWASP ZAP o Burp Suite Professional.
+- Enfoque: Pruebas de caja negra sobre los endpoints de la API y la interfaz 
+  de usuario para detectar fallos de configuración en tiempo de ejecución.
+
+5. REVISIÓN MANUAL DE CÓDIGO (PEER REVIEW)
+--------------------------------------------------------------------------------
+- Todo cambio de código debe ser revisado por al menos un par (Senior Developer 
+  o Lead) con enfoque en:
+  - Validación de entradas y salidas.
+  - Gestión correcta de sesiones y autenticación.
+  - Prevención de inyecciones SQL y XSS.
+
+6. CUMPLIMIENTO Y EXCEPCIONES
+--------------------------------------------------------------------------------
+El incumplimiento de esta política detendrá automáticamente el pipeline de CI/CD. 
+Cualquier excepción debe ser documentada y aprobada formalmente por el CISO.
+
+--------------------------------------------------------------------------------
+FIN DEL DOCUMENTO | Elaborado por: Auditoría de Ciberseguridad
+================================================================================

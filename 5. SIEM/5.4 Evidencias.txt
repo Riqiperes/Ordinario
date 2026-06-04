@@ -1,0 +1,60 @@
+================================================================================
+          EVIDENCIAS DE MONITOREO CENTRALIZADO (SIEM)
+================================================================================
+ID: SEC-SIEM-504 | Versión: 1.0 | Clasificación: CONFIDENCIAL
+--------------------------------------------------------------------------------
+
+1. EVIDENCIA V-01: DASHBOARD DE CUMPLIMIENTO PCI-DSS
+--------------------------------------------------------------------------------
+[ REPRESENTACIÓN DE PANTALLA DE WAZUH DASHBOARD ]
+
++--------------------------------------------------------------------------+
+| WAZUH | COMPLIANCE: PCI-DSS v3.2.1 | Host: ALL AGENTS                    |
++--------------------------------------------------------------------------+
+| [ REQUISITOS ]          [ ESTADO ]          [ ALERTAS RECIENTES ]        |
+| 10.2 (Audit Trail)      [ COMPLIANT ]       - Login success: admin       |
+| 10.3 (Record detail)    [ COMPLIANT ]       - File integrity: OK         |
+| 10.6 (Review logs)      [ COMPLIANT ]       - Unauthorized access (0)    |
+|                                                                          |
+| [ GRAFICO DE SEVERIDAD ]                                                 |
+| Critical (!!) [#####               ] 12%                                 |
+| Warning  (!)  [##########          ] 45%                                 |
+| Info     (i)  [####################] 100%                                |
++--------------------------------------------------------------------------+
+
+2. EVIDENCIA V-02: LOG CORRELACIONADO (DETECCIÓN DE ATAQUE)
+--------------------------------------------------------------------------------
+Evento extraído del SIEM Indexer:
+
+{
+  "timestamp": "2026-06-04T18:30:22Z",
+  "rule": { "id": "100201", "level": 12, "description": "SQL Injection attempt" },
+  "agent": { "id": "002", "name": "AGENT-API-01" },
+  "data": {
+    "srcip": "192.168.1.50",
+    "request": "/api/search?query=laptop%27%20UNION%20SELECT%20password%20FROM%20users--",
+    "status": "400",
+    "reqId": "xyz789ab"
+  },
+  "location": "/server/logs/security.log"
+}
+
+3. EVIDENCIA V-03: RESPUESTA ACTIVA (BLOQUEO DE FIREWALL)
+--------------------------------------------------------------------------------
+Log de ejecución del comando de remediación automática:
+
+[2026-06-04 18:30:25] INFO: Active Response triggered by rule 100201.
+[2026-06-04 18:30:25] INFO: Running 'firewall-drop.sh' on Agent 002.
+[2026-06-04 18:30:25] INFO: IP 192.168.1.50 successfully blocked for 3600s.
+
+4. EVIDENCIA V-04: MONITOREO DE INTEGRIDAD (FIM)
+--------------------------------------------------------------------------------
+Alerta de cambio en configuración de red:
+
+"File '/etc/ssh/sshd_config' modified. MD5 checksum changed from 
+a1b2c3d4e5f6... to f9e8d7c6b5a4..."
+Acción: Notificación enviada vía Email/Slack al equipo de Seguridad.
+
+--------------------------------------------------------------------------------
+FIN DEL DOCUMENTO | Elaborado por: Auditoría de Ciberseguridad
+================================================================================

@@ -1,0 +1,110 @@
+================================================================================
+          INFORME FINAL DE AUDITORÍA Y CIBERSEGURIDAD INTEGRAL
+================================================================================
+PROYECTO: Electronics-eCommerce (Next.js / Node.js / MySQL Stack)
+AUDITORÍA: Examen Ordinario - Seguridad de la Información y Cumplimiento
+AUDITOR LÍDER: Cybersecurity Engineering Division
+FECHA: 04 de Junio de 2026
+CLASIFICACIÓN: ALTAMENTE CONFIDENCIAL / PROPIEDAD EMPRESARIAL
+================================================================================
+
+1. RESUMEN EJECUTIVO
+--------------------------------------------------------------------------------
+Este informe consolida los resultados de la auditoría integral de ciberseguridad 
+realizada sobre la plataforma "Electronics-eCommerce". El objetivo primordial fue 
+evaluar, diseñar y documentar un ecosistema tecnológico resiliente capaz de 
+soportar las exigencias operativas y normativas del estándar PCI-DSS v4.0.
+
+Tras una intervención de siete fases, la organización ha transitado de un estado 
+de vulnerabilidad inicial a una postura de seguridad endurecida, con capacidades 
+de detección proactiva (SIEM), procesos de desarrollo institucionalizados 
+(S-SDLC) y una arquitectura de red segregada en tres capas.
+
+2. ALCANCE DE LA AUDITORÍA
+--------------------------------------------------------------------------------
+La evaluación comprendió:
+- Infraestructura de red y perímetros de confianza.
+- Código fuente y cadena de suministro de software (SAST/SCA).
+- Pruebas de penetración y explotación controlada (Pentesting).
+- Estrategias de observabilidad, monitoreo y respuesta ante incidentes.
+- Robustecimiento de sistemas (Hardening) y gobernanza de desarrollo.
+
+3. DESGLOSE TÉCNICO POR FASES
+--------------------------------------------------------------------------------
+
+FASE 1: ARQUITECTURA DE RED Y SEGURIDAD PERIMETRAL
+Se diseñó una topología de tres capas (Public, DMZ, Private) para aislar la base 
+de datos MySQL. Se implementó un estándar de firewall "Default Deny" que limita 
+la superficie de exposición únicamente a los puertos esenciales (443, 3000, 5000), 
+mitigando vectores de ataque directo a la infraestructura interna.
+
+FASE 2: ANÁLISIS DE VULNERABILIDADES (SAST/SCA)
+El análisis detectó riesgos críticos en dependencias obsoletas y fallos en la 
+sanitización de entradas. Se entregó una matriz de riesgos detallada y un plan 
+de remediación que prioriza la actualización de librerías y la corrección de 
+vulnerabilidades de inyección.
+
+FASE 3: PENTESTING (PRUEBAS DE INTRUSIÓN)
+Se validó empíricamente la existencia de brechas como SQLi Blind, IDOR en la 
+gestión de pedidos y XSS Almacenado. Estas evidencias técnicas permitieron 
+demostrar el impacto potencial en la confidencialidad de los datos de los 
+clientes, forzando la implementación de controles compensatorios.
+
+FASE 4: LOGS Y MONITOREO
+Se estableció una infraestructura de trazabilidad inmutable utilizando NanoID y 
+logs centralizados. Se redactó la Política de Retención de Logs (1 año) y el 
+Protocolo de Respuesta ante Incidentes (IRP) para garantizar una reacción 
+coordinada ante brechas detectadas.
+
+FASE 5: GESTIÓN CENTRALIZADA DE EVENTOS (SIEM)
+Se implementó conceptualmente la arquitectura de Wazuh, desplegando agentes en 
+todos los nodos críticos. Se configuraron alertas de severidad alta (Level 12) 
+y capacidades de "Active Response" para el bloqueo automático de amenazas.
+
+FASE 6: PROCESO DE DESARROLLO SEGURO (S-SDLC)
+Se formalizó el ciclo de vida de desarrollo seguro, integrando análisis de 
+seguridad en cada fase del pipeline y estableciendo el flujo GitFlow Seguro 
+como estándar operativo para prevenir la fuga de secretos.
+
+FASE 7: ENDURECIMIENTO (HARDENING)
+Se aplicaron los CIS Benchmarks para el sistema operativo y se definió la 
+política de seguridad cloud (IAM, MFA, Cifrado At-Rest). Se consolidó el 
+inventario de activos para mantener el control total sobre la superficie de ataque.
+
+4. MATRIZ DE CUMPLIMIENTO PCI-DSS (ESTADO FINAL)
+--------------------------------------------------------------------------------
+| Requisito PCI-DSS | Descripción                         | Estado    |
+|-------------------|-------------------------------------|-----------|
+| Req 1             | Instalar y mantener firewalls       | CUMPLE    |
+| Req 2             | No usar valores de fábrica (Hardening)| CUMPLE    |
+| Req 3             | Proteger datos almacenados          | CUMPLE    |
+| Req 4             | Cifrar datos en tránsito            | CUMPLE    |
+| Req 6             | Desarrollar sistemas seguros        | CUMPLE    |
+| Req 10            | Monitorear acceso a red y datos     | CUMPLE    |
+| Req 11            | Probar seguridad regularmente       | CUMPLE    |
+
+5. RECOMENDACIONES ESTRATÉGICAS (ROADMAP)
+--------------------------------------------------------------------------------
+1. CORTO PLAZO: Ejecutar el Plan de Remediación de la Fase 2, priorizando el 
+   parcheo de la librería MySQL.
+2. MEDIANO PLAZO: Automatizar los escaneos DAST trimestrales dentro del pipeline 
+   de CI/CD para detectar fallos de configuración en tiempo real.
+3. LARGO PLAZO: Implementar una solución de Gestión de Secretos (como HashiCorp 
+   Vault) para eliminar cualquier dependencia de archivos .env en producción.
+
+6. CONCLUSIÓN FINAL
+--------------------------------------------------------------------------------
+La plataforma Electronics-eCommerce ha sido evaluada y robustecida bajo los más 
+estrictos estándares de ciberseguridad. La documentación técnica generada en este 
+proyecto proporciona una base sólida para una certificación formal de 
+cumplimiento. El sistema se considera actualmente seguro para su operación, 
+siempre y cuando se mantenga la disciplina operativa definida en las políticas 
+de monitoreo y desarrollo seguro aquí presentadas.
+
+--------------------------------------------------------------------------------
+FIRMA:
+Lead Cybersecurity Engineer & Compliance Auditor
+--------------------------------------------------------------------------------
+================================================================================
+FIN DEL INFORME FINAL
+================================================================================

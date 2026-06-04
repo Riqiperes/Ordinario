@@ -1,0 +1,50 @@
+================================================================================
+          POLÍTICA DE HARDENING Y SEGURIDAD DE APLICACIONES CLOUD
+================================================================================
+ID: SEC-CLOUD-703 | Versión: 1.0 | Clasificación: CONFIDENCIAL
+--------------------------------------------------------------------------------
+
+1. INTRODUCCIÓN
+--------------------------------------------------------------------------------
+La adopción de servicios en la nube (AWS/Azure/GCP) requiere un modelo de 
+Responsabilidad Compartida. Esta política define los controles que la 
+organización debe implementar para proteger la plataforma en el cloud.
+
+2. GESTIÓN DE IDENTIDADES Y ACCESOS (IAM)
+--------------------------------------------------------------------------------
+- Mínimo Privilegio: Ningún usuario o servicio tendrá permisos de 'Administrator' 
+  de forma permanente.
+- MFA Obligatorio: Autenticación Multi-Factor para todos los accesos a la 
+  consola de gestión cloud.
+- Roles de Servicio: La aplicación Node.js debe utilizar Roles de IAM con 
+  permisos limitados a sus buckets de S3 o instancias de base de datos.
+
+3. SEGURIDAD DE RED EN LA NUBE (VPC/VNET)
+--------------------------------------------------------------------------------
+- Microsegmentación: Uso de Security Groups (AWS) o Network Security Groups 
+  (Azure) para permitir solo el tráfico definido en la Fase 1.
+- VPC Peering / Private Link: Las conexiones a la base de datos deben realizarse 
+  exclusivamente a través de la red privada del proveedor, nunca vía Internet.
+
+4. PROTECCIÓN DE DATOS EN LA NUBE
+--------------------------------------------------------------------------------
+- Cifrado en Reposo (At-Rest): Todos los volúmenes EBS y bases de datos RDS 
+  deben utilizar cifrado AES-256 mediante llaves gestionadas (KMS).
+- Protección de Buckets: Bloqueo de acceso público (Block Public Access) por 
+  defecto para todos los almacenamientos de objetos.
+
+5. MONITOREO Y LOGGING CLOUD
+--------------------------------------------------------------------------------
+- Habilitación de CloudTrail/Activity Logs para auditar todas las llamadas a 
+  la API del proveedor cloud.
+- Integración de alertas de presupuesto para detectar posibles ataques de 
+  consumo de recursos (Resource Exhaustion).
+
+6. CUMPLIMIENTO (COMPLIANCE)
+--------------------------------------------------------------------------------
+Uso de herramientas de CSPM (Cloud Security Posture Management) para verificar 
+el cumplimiento continuo de los estándares CIS Foundation Benchmarks.
+
+--------------------------------------------------------------------------------
+FIN DEL DOCUMENTO | Elaborado por: Auditoría de Ciberseguridad
+================================================================================

@@ -1,1 +1,44 @@
-7.2 Inventario de équipos de còmputo: Debe incluir ultima fecha de verificaciòn con imagen o evidenia de que se encuentra protegida.
+================================================================================
+          INVENTARIO TÉCNICO DE EQUIPOS DE CÓMPUTO Y ACTIVOS
+================================================================================
+ID: SEC-INV-702 | Versión: 1.0 | Clasificación: CONFIDENCIAL
+--------------------------------------------------------------------------------
+
+1. PROPÓSITO
+--------------------------------------------------------------------------------
+Mantener un registro actualizado de todos los activos de hardware y software 
+críticos para la operación de Electronics-eCommerce, facilitando la gestión de 
+vulnerabilidades y la respuesta ante incidentes.
+
+2. MATRIZ DE ACTIVOS DE INFRAESTRUCTURA
+--------------------------------------------------------------------------------
+
+| ID Activo | Nombre Host    | Función          | SO / Versión      | IP Interna | Criticidad |
+|-----------|----------------|------------------|-------------------|------------|------------|
+| SRV-WEB-01| PROXY-NGINX-01 | Proxy / Front-end| Debian 12 (Bookw) | 10.0.1.10  | ALTA       |
+| SRV-APP-01| NODE-API-01    | Lógica de Negocio| Ubuntu 22.04 LTS  | 10.0.1.11  | CRÍTICA     |
+| SRV-DB-01 | MYSQL-DATA-01  | Almacenamiento   | Ubuntu 22.04 LTS  | 10.0.2.20  | CRÍTICA     |
+| FWL-PER-01| FW-EDGE-01     | Seguridad Perim  | FortiOS / PFSense | 10.0.1.1   | CRÍTICA     |
+| MON-SIEM-01| WAZUH-MGR-01  | Monitoreo Central| Ubuntu 22.04 LTS  | 10.0.0.5   | ALTA       |
+
+3. INVENTARIO DE SOFTWARE CRÍTICO
+--------------------------------------------------------------------------------
+- Runtime: Node.js v18.x LTS / Next.js v14.x
+- Gestor de Paquetes: NPM / Bun
+- Base de Datos: MySQL v8.0 Community Edition
+- Servidor Web: Nginx v1.24 (Stable)
+- ORM: Prisma v5.x
+
+4. RESPONSABLE DE CUSTODIA
+--------------------------------------------------------------------------------
+- Propietario del Activo: Departamento de TI / DevOps.
+- Frecuencia de Actualización: Mensual o tras cada cambio en la infraestructura.
+
+5. POLÍTICA DE DISPOSICIÓN FINAL
+--------------------------------------------------------------------------------
+Todo equipo que sea retirado de producción debe ser sometido a un borrado 
+seguro de discos (NIST 800-88) antes de su reciclaje o disposición.
+
+--------------------------------------------------------------------------------
+FIN DEL DOCUMENTO | Elaborado por: Auditoría de Ciberseguridad
+================================================================================

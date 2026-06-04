@@ -1,0 +1,58 @@
+================================================================================
+          PROCESO DE ATENCIÓN Y RESPUESTA A INCIDENTES (IRP)
+================================================================================
+ID: SEC-IRP-403 | Versión: 1.0 | Clasificación: CONFIDENCIAL
+--------------------------------------------------------------------------------
+
+1. PROPÓSITO
+--------------------------------------------------------------------------------
+Definir las acciones coordinadas que la organización debe seguir al detectar un 
+evento que comprometa la seguridad, disponibilidad o integridad de la 
+plataforma "Electronics-eCommerce".
+
+2. FASES DEL CICLO DE VIDA DEL INCIDENTE
+--------------------------------------------------------------------------------
+
+FASE 1: DETECCIÓN Y ANÁLISIS
+- Fuente: Alertas del `securityLogger`, reportes de usuarios o anomalías en el 
+  rendimiento del sistema.
+- Acción: El equipo de seguridad valida si el evento es un "Falso Positivo" o 
+  un incidente real. Se clasifica por impacto (Bajo, Medio, Alto, Crítico).
+
+FASE 2: CONTENCIÓN
+- Corto Plazo: Bloqueo inmediato de la dirección IP atacante en el Firewall.
+- Largo Plazo: Aislamiento del servidor afectado o desactivación temporal del 
+  módulo bajo ataque (ej: apagar el servicio de registro de usuarios).
+
+FASE 3: ERRADICACIÓN
+- Identificación y eliminación de la causa raíz (ej: aplicar el parche de 
+  seguridad definido en el Plan de Remediación).
+- Limpieza de posibles 'backdoors' o scripts maliciosos inyectados.
+
+FASE 4: RECUPERACIÓN
+- Restauración de servicios desde respaldos limpios y verificados.
+- Monitoreo intensivo durante las primeras 48 horas tras la restauración para 
+  confirmar que la amenaza no persiste.
+
+FASE 5: ACTIVIDADES POST-INCIDENTE (LECCIONES APRENDIDAS)
+- Elaboración de un informe final del incidente.
+- Actualización de las políticas de seguridad y reglas del firewall basadas 
+  en el vector de ataque detectado.
+
+3. EQUIPO DE RESPUESTA (CERT)
+--------------------------------------------------------------------------------
+- Líder de Incidentes: Responsable de la toma de decisiones.
+- Analista Forense: Encargado de preservar los logs y evidencias.
+- Comunicaciones: Responsable de notificar a los clientes/autoridades si hay 
+  exfiltración de datos (Cumplimiento GDPR/PCI-DSS).
+
+4. NIVELES DE ESCALACIÓN
+--------------------------------------------------------------------------------
+- Nivel 1 (Técnico): Resolución de bloqueos de IP y parches menores.
+- Nivel 2 (Gerencial): Compromiso de datos de clientes o caída total del servicio.
+- Nivel 3 (Legal/Directivo): Notificación a procesadores de pago y entes 
+  regulatorios.
+
+--------------------------------------------------------------------------------
+FIN DEL DOCUMENTO | Elaborado por: Auditoría de Ciberseguridad
+================================================================================

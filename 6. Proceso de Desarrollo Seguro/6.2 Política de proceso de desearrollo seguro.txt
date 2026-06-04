@@ -1,0 +1,49 @@
+================================================================================
+          POLÍTICA DE PROCESO DE DESARROLLO SEGURO (S-SDLC)
+================================================================================
+ID: SEC-POL-602 | Versión: 1.0 | Clasificación: CONFIDENCIAL
+--------------------------------------------------------------------------------
+
+1. INTRODUCCIÓN
+--------------------------------------------------------------------------------
+La seguridad debe ser considerada en cada fase del ciclo de vida de desarrollo de 
+software (SDLC). Esta política define el marco de trabajo para integrar la 
+seguridad desde la concepción hasta el retiro del software.
+
+2. FASES DEL DESARROLLO SEGURO
+--------------------------------------------------------------------------------
+
+A. REQUERIMIENTOS:
+   Identificación de requisitos de seguridad basados en normativas (PCI-DSS) y 
+   análisis de riesgos inicial.
+
+B. DISEÑO:
+   Modelado de amenazas (Threat Modeling) para anticipar vectores de ataque y 
+   definir la arquitectura de seguridad (ej: segmentación de red).
+
+C. CODIFICACIÓN:
+   Uso de estándares de codificación segura (OWASP Top 10) y herramientas de 
+   análisis en tiempo real.
+
+D. PRUEBAS:
+   Ejecución de Pentesting, SAST y DAST según lo definido en la Fase 3 y 6.1.
+
+E. DESPLIEGUE:
+   Verificación de integridad de los artefactos y configuración segura del 
+   entorno de producción.
+
+3. RESPONSABILIDADES
+--------------------------------------------------------------------------------
+- Desarrolladores: Responsables de escribir código limpio y seguro.
+- Equipo de Seguridad: Responsables de auditar y proporcionar herramientas.
+- Dueño del Producto: Responsable de priorizar los hallazgos de seguridad en 
+  el backlog.
+
+4. CAPACITACIÓN OBLIGATORIA
+--------------------------------------------------------------------------------
+Todo el personal de desarrollo debe completar una capacitación anual sobre 
+codificación segura y las amenazas emergentes del OWASP Top 10.
+
+--------------------------------------------------------------------------------
+FIN DEL DOCUMENTO | Elaborado por: Auditoría de Ciberseguridad
+================================================================================

@@ -1,0 +1,51 @@
+================================================================================
+          ESTRATEGIA E IMPLEMENTACIÓN DEL SISTEMA SIEM
+================================================================================
+ID: SEC-SIEM-501 | Versión: 1.0 | Clasificación: CONFIDENCIAL
+--------------------------------------------------------------------------------
+
+1. INTRODUCCIÓN
+--------------------------------------------------------------------------------
+Este documento describe la arquitectura y el proceso de implementación del sistema 
+SIEM (Security Information and Event Management) seleccionado para la plataforma 
+"Electronics-eCommerce". El objetivo es centralizar, correlacionar y analizar 
+los eventos de seguridad de todas las capas de la infraestructura en tiempo real.
+
+2. SOLUCIÓN SELECCIONADA: WAZUH / ELK STACK
+--------------------------------------------------------------------------------
+Se ha optado por una solución basada en Wazuh (Open Source SIEM) debido a su 
+capacidad nativa de integración con sistemas Linux/Windows, análisis de logs 
+de aplicaciones Node.js y cumplimiento integrado de PCI-DSS.
+
+COMPONENTES DE LA IMPLEMENTACIÓN:
+- Wazuh Indexer: Almacenamiento y búsqueda de eventos indexados.
+- Wazuh Server: Motor de análisis, decodificación de logs y disparo de reglas.
+- Wazuh Dashboard: Interfaz visual para la gestión de incidentes y reportes.
+
+3. ARQUITECTURA DE CENTRALIZACIÓN DE LOGS
+--------------------------------------------------------------------------------
+Los logs definidos en la Fase 4 son recolectados y enviados al SIEM mediante el 
+siguiente flujo:
+1. Agente Local: Lee los archivos `access.log`, `error.log` y `security.log`.
+2. Cifrado (AES): Los eventos se envían vía puerto 1514 (TCP) al servidor central.
+3. Decodificación: El servidor SIEM utiliza decodificadores personalizados para 
+   interpretar el formato JSON del `securityLogger`.
+4. Correlación: Se aplican reglas para detectar ataques complejos (ej: múltiples 
+   alertas de SQLi seguidas de un cambio en la base de datos).
+
+4. CONFIGURACIÓN DEL SERVIDOR CENTRAL
+--------------------------------------------------------------------------------
+- Sistema Operativo: Ubuntu Server 22.04 LTS (Endurecido).
+- Recursos: 8GB RAM, 4 vCPUs, 100GB Almacenamiento SSD.
+- Puerto de Escucha: 1514/1515 (Gestión de Agentes y Recolección).
+- Retención en Índices: 90 días con rotación automática a almacenamiento en frío.
+
+5. CUMPLIMIENTO PCI-DSS REQUISITO 10.6
+--------------------------------------------------------------------------------
+La implementación garantiza la revisión diaria de todos los eventos de seguridad 
+mediante el tablero "PCI-DSS Compliance" de Wazuh, el cual agrupa los hallazgos 
+según los numerales del estándar.
+
+--------------------------------------------------------------------------------
+FIN DEL DOCUMENTO | Elaborado por: Auditoría de Ciberseguridad
+================================================================================

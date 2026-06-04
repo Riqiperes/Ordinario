@@ -1,0 +1,66 @@
+ORDINARIO – SEGURIDAD DE SOFTWARE
+Seguridad de la Información y Cumplimiento (Enfoque PCI-DSS + SIEM)
+1.	Objetivo
+El equipo (máximo de 3) deberá evaluar, asegurar, monitorear y documentar un entorno tecnológico mediante controles de seguridad, pruebas técnicas y la implementación de un SIEM, entregando un portafolio de evidencias.
+2.	Forma de Entrega (obligatorio)
+
+Entregar un zip con toda la siguiente estructura. 
+
+Nota: Deberá incluir un archivo llamado readme.md con le nombre completo de los integrantes.
+
+Deberán crear cada carpeta con nombre del numeral.
+
+/Ordinario/
+│
+├── 1. Red y Seguridad Perimetral/
+│   ├── 1.1 Diagrama de red
+│   ├── 1.2 Estándar de configuración de puertos y servicios (Reglas de firewall,etc)
+│
+├── 2. Vulnerabilidades/
+│   ├── 2.1 Escaneo
+│   ├── 2.2 Hallazgos
+│   ├── 2.3 Remediación
+│
+├── 3. Pentesting/
+│   ├── 3.1 Metodología
+│   ├── 3.2 Evidencias
+│   ├── 3.3 Resultados
+
+├── 4. Logs y Monitoreo/
+│   ├── 4.1 Configuración: Que activos tendran activos los logs y donde se van a ubicar
+│   ├── 4.2 Política de monitoreo
+	  4.3 Proceso de atención de incidentes.
+│
+├── 5. SIEM/
+
+│   ├── 5.1 Implementación
+│   ├── 5.2 Agentes (mínimo 3).
+│   ├── 5.3 Alertas generadas o resultados
+│   ├── 5.4 Evidencias
+│
+├── 6. Proceso de Desarrollo Seguro/
+│   ├── 6.1 Política de análisis de código
+│   ├── 6.2 Política de proceso de desearrollo seguro
+	6.3 Proceso de desarollo seguro
+	6.4 Polítia de vulnerabilidades
+	6.5 Flujo de trabajo GIT
+│
+├── 7. Hardening/
+│   ├── 7.1 Política de hardening de Sistema operativos de computadores personales y servidores. Que abarque Windows, Linux y Mac.
+	7.2 Inventario de équipos de còmputo: Debe incluir ultima fecha de verificaciòn con imagen o evidenia de que se encuentra protegida.
+│   ├── 7.3 Política de hardening y seguridad de aplicaciones cloud
+│
+├── 8. Documentación/
+│   ├── Informe final: Pequeño documento, donde se menciona toda la lista de documetos y políticas entregados.
+3.	Evaluación
+
+Criterio	Ponderación
+Vulnerabilidades	15%
+Pentesting	15%
+Seguridad de red	10%
+Logs y monitoreo	10%
+SIEM	20%
+Desarrollo seguro	10%
+Hardening	10%
+Documentación	10%
+
