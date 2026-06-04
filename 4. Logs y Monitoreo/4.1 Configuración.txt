@@ -1,0 +1,1 @@
+4.1 Configuración: Que activos tendran activos los logs y donde se van a ubicar

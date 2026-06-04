@@ -1,0 +1,1 @@
+7.1 Política de hardening de Sistema operativos de computadores personales y servidores. Que abarque Windows, Linux y Mac.
