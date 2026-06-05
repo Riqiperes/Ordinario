@@ -1,51 +1,74 @@
 ================================================================================
-          ESTRATEGIA E IMPLEMENTACIÓN DEL SISTEMA SIEM
+          GUÍA TÉCNICA: IMPLEMENTACIÓN REAL DEL SIEM (WAZUH)
 ================================================================================
-ID: SEC-SIEM-501 | Versión: 1.0 | Clasificación: CONFIDENCIAL
+ID: SEC-SIEM-REAL-501 | Clasificación: CONFIDENCIAL
 --------------------------------------------------------------------------------
 
-1. INTRODUCCIÓN
+1. REQUISITOS PREVIOS
 --------------------------------------------------------------------------------
-Este documento describe la arquitectura y el proceso de implementación del sistema 
-SIEM (Security Information and Event Management) seleccionado para la plataforma 
-"Electronics-eCommerce". El objetivo es centralizar, correlacionar y analizar 
-los eventos de seguridad de todas las capas de la infraestructura en tiempo real.
+- Docker Desktop instalado en Windows.
+- Repositorio del E-commerce clonado y funcional.
+- Agente de Wazuh instalado localmente.
 
-2. SOLUCIÓN SELECCIONADA: WAZUH / ELK STACK
+2. PASO 1: DESPLIEGUE DEL MANAGER (SERVIDOR CENTRAL)
 --------------------------------------------------------------------------------
-Se ha optado por una solución basada en Wazuh (Open Source SIEM) debido a su 
-capacidad nativa de integración con sistemas Linux/Windows, análisis de logs 
-de aplicaciones Node.js y cumplimiento integrado de PCI-DSS.
+Para simular el servidor central en el entorno local, se ejecutó el stack de 
+Wazuh mediante Docker Compose:
 
-COMPONENTES DE LA IMPLEMENTACIÓN:
-- Wazuh Indexer: Almacenamiento y búsqueda de eventos indexados.
-- Wazuh Server: Motor de análisis, decodificación de logs y disparo de reglas.
-- Wazuh Dashboard: Interfaz visual para la gestión de incidentes y reportes.
+$ git clone https://github.com/wazuh/wazuh-docker.git
+$ cd wazuh-docker/single-node
+$ docker-compose up -d
 
-3. ARQUITECTURA DE CENTRALIZACIÓN DE LOGS
+Evidencia: Acceso exitoso al dashboard en https://localhost:443 (Usuario: admin)
+
+3. PASO 2: CONFIGURACIÓN DEL AGENTE EN EL REPOSITORIO
 --------------------------------------------------------------------------------
-Los logs definidos en la Fase 4 son recolectados y enviados al SIEM mediante el 
-siguiente flujo:
-1. Agente Local: Lee los archivos `access.log`, `error.log` y `security.log`.
-2. Cifrado (AES): Los eventos se envían vía puerto 1514 (TCP) al servidor central.
-3. Decodificación: El servidor SIEM utiliza decodificadores personalizados para 
-   interpretar el formato JSON del `securityLogger`.
-4. Correlación: Se aplican reglas para detectar ataques complejos (ej: múltiples 
-   alertas de SQLi seguidas de un cambio en la base de datos).
+Para que el SIEM analice el e-commerce, se modificó el archivo 'ossec.conf' del 
+agente para incluir los logs generados en la Fase 4.
 
-4. CONFIGURACIÓN DEL SERVIDOR CENTRAL
---------------------------------------------------------------------------------
-- Sistema Operativo: Ubuntu Server 22.04 LTS (Endurecido).
-- Recursos: 8GB RAM, 4 vCPUs, 100GB Almacenamiento SSD.
-- Puerto de Escucha: 1514/1515 (Gestión de Agentes y Recolección).
-- Retención en Índices: 90 días con rotación automática a almacenamiento en frío.
+CONFIGURACIÓN APLICADA (XML):
+<ossec_config>
+  <localfile>
+    <location>C:\Users\ricar\OneDrive\Desktop\...\server\logs\access.log</location>
+    <log_format>syslog</log_format>
+  </localfile>
 
-5. CUMPLIMIENTO PCI-DSS REQUISITO 10.6
+  <localfile>
+    <location>C:\Users\ricar\OneDrive\Desktop\...\server\logs\security.log</location>
+    <log_format>json</log_format>
+  </localfile>
+
+  <!-- Monitoreo de Integridad de Archivos (FIM) -->
+  <syscheck>
+    <directories check_all="yes" realtime="yes">C:\Users\ricar\...\server</directories>
+    <ignore>C:\Users\ricar\...\server\logs</ignore>
+  </syscheck>
+</ossec_config>
+
+4. PASO 3: CREACIÓN DE REGLAS DE CORRELACIÓN (REGLA REAL)
 --------------------------------------------------------------------------------
-La implementación garantiza la revisión diaria de todos los eventos de seguridad 
-mediante el tablero "PCI-DSS Compliance" de Wazuh, el cual agrupa los hallazgos 
-según los numerales del estándar.
+Se añadió una regla personalizada en el Manager para detectar los intentos de 
+ataque SQLi capturados por nuestro `securityLogger.js`:
+
+ARCHIVO: /var/ossec/etc/rules/local_rules.xml
+<group name="ecommerce_security">
+  <rule id="100001" level="12">
+    <decoded_as>json</decoded_as>
+    <field name="type">SECURITY_ALERT</field>
+    <description>Alerta Crítica: Intento de Inyección detectado en E-commerce</description>
+    <mitre>
+      <id>T1190</id>
+    </mitre>
+  </rule>
+</group>
+
+5. PASO 4: PRUEBA DE DISPARO DE ALERTA
+--------------------------------------------------------------------------------
+1. Se ejecutó el payload de SQLi en el navegador.
+2. El servidor Node.js escribió el evento en `security.log`.
+3. El Agente de Wazuh detectó el cambio en tiempo real.
+4. El Dashboard de Wazuh mostró la alerta con nivel de severidad 12 (Crítico).
 
 --------------------------------------------------------------------------------
-FIN DEL DOCUMENTO | Elaborado por: Auditoría de Ciberseguridad
+DOCUMENTACIÓN DE SOPORTE | FASE 5 - SIEM
 ================================================================================
